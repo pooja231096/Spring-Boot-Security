@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>Spring Security</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style type="text/css">
+.generic-container {
+	width: 80%;
+	background-color: #EAE7E7;
+	border-radius: 4px;
+	margin: 20px auto;
+	padding: 20px;
+	padding: 20px;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="col-md-6">
+			<div class="generic-container">
+				<h1>Register</h1>
+				<div th:if="${null != isRegistered && isRegistered}">
+					<div class="alert alert-info">You've successfully registered
+						to the application! Please login to continue.</div>
+				</div>
+				<div th:if="${null != isRegistered && !isRegistered}">
+					<div class="alert alert-danger">Registration failed. Please
+						try again.</div>
+					<br />
+					<div class="alert alert-danger">
+						<p th:text="${message}" />
+					</div>
+				</div>
+				<form name="registration-form" th:action="@{/register}"
+					th:object="${user}" method="post">
+					<div class="form-group">
+						<label for="firstName" class="control-label">First name</label> <input
+							id="firstName" class="form-control" th:field="*{firstName}" />
+					</div>
+					<div class="form-group">
+						<label for="lastName" class="control-label">Last name</label> <input
+							id="lastName" class="form-control" th:field="*{lastName}" />
+					</div>
+					<div class="form-group">
+						<label for="email" class="control-label">E-mail</label> <input
+							id="email" class="form-control" th:field="*{email}" />
+					</div>
+					<div class="form-group">
+						<label for="userName" class="control-label">User Name</label> <input
+							id="userName" class="form-control" th:field="*{userName}" />
+					</div>
+					<div class="form-group">
+						<label for="password" class="control-label">Password</label> <input
+							id="password" class="form-control" type="password"
+							th:field="*{password}" />
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="checkbox-user"
+							th:field="*{roles}" value="USER"> <label
+							class="form-check-label" for="checkbox-user">USER</label> <input
+							type="checkbox" class="form-check-input" id="checkbox-admin"
+							th:field="*{roles}" value="ADMIN"> <label
+							class="form-check-label" for="checkbox-user">ADMIN</label>
+					</div>
+					<div class="form-actions" align="right">
+						<button type="reset" class="btn btn-default">Reset</button>
+						&nbsp;&nbsp;
+						<button type="submit" class="btn btn-success">Register</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="generic-container">
+				<h1>Already registered?</h1>
+				<br />
+				<div th:if="${param.error}" class="alert alert-danger">Invalid
+					username or password.</div>
+				<div th:if="${param.logout}" class="alert alert-info">You have
+					been logged out.</div>
+				<form name="login-form" th:action="@{/login}" method="post">
+					<div class="form-group">
+						<label class="control-lable" for="username">User Name</label> <input
+							type="text" name="username" class="form-control"
+							placeholder="Enter your username"></input>
+					</div>
+					<div class="form-group">
+						<label class="control-lable" for="password">Password</label> <input
+							type="password" name="password" class="form-control"
+							placeholder="Enter your password"></input>
+					</div>
+					<br />
+					<div class="form-actions" align="right">
+						<button type="reset" class="btn btn-default">Reset</button>
+						&nbsp;&nbsp;
+						<button type="submit" class="btn btn-success">Login</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
